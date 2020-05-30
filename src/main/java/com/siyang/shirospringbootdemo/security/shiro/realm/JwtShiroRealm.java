@@ -51,6 +51,7 @@ public class JwtShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        // 这里可以优化，事先将权限信息存入jwt中，只需要直接解析就可以赋值角色与权限
         JwtToken primaryPrincipal = (JwtToken)principalCollection.getPrimaryPrincipal();
         String token = primaryPrincipal.getToken();
         String username = jwtTokenProvider.parseToken(token);

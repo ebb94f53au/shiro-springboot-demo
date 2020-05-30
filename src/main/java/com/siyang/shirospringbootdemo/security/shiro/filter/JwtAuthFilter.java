@@ -92,19 +92,20 @@ public class JwtAuthFilter extends BasicHttpAuthenticationFilter {
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
 
         HttpServletResponse res = (HttpServletResponse)servletResponse;
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setStatus(HttpServletResponse.SC_OK);
-        res.setCharacterEncoding("UTF-8");
-        PrintWriter writer = res.getWriter();
-        Map<String, Object> map= new HashMap<>();
-        map.put("status", 401);
-        LocalDateTime now = LocalDateTime.now();
-        now.format(DateTimeFormatter.ISO_DATE_TIME);
-
-        map.put("timestamp", now.toString());
-        map.put("message", "身份认证失败");
-        writer.write(JSON.toJSONString(map));
-        writer.close();
+        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "身份认证失败");
+//        res.setHeader("Access-Control-Allow-Origin", "*");
+//        res.setStatus(HttpServletResponse.SC_OK);
+//        res.setCharacterEncoding("UTF-8");
+//        PrintWriter writer = res.getWriter();
+//        Map<String, Object> map= new HashMap<>();
+//        map.put("status", 200);
+//        LocalDateTime now = LocalDateTime.now();
+//        now.format(DateTimeFormatter.ISO_DATE_TIME);
+//
+//        map.put("timestamp", now.toString());
+//        map.put("message", "身份认证失败");
+//        writer.write(JSON.toJSONString(map));
+//        writer.close();
         return false;
     }
 }
